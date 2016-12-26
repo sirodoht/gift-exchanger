@@ -132,7 +132,7 @@
         $('.step-2').show();
 
         var gifters = parseInt($('input[name=gifters]').val());
-        if (!gifters) {
+        if (!gifters || gifters < 2 || gifters > 1000) {
           gifters = 2;
         }
         var giftMap = new Array(gifters);
