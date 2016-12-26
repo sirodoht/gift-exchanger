@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Gift Exchange 2.0</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Open+Sans">
+    <style media="screen">
+      html, body {
+        height: 100%;
+        background: #df1b03;
+        color: #fff;
+        font-family: 'Open Sans', sans-serif;
+      }
+
+      h1 {
+        margin-top: 60px;
+        font-size: 50px;
+        font-family: 'Roboto Slab', sans-serif;
+      }
+
+      .step-1, .step-2 {
+        margin-top: 40px;
+      }
+
+      .number-label {
+        font-size: 22px;
+      }
+
+      .number-field {
+        background: #df1b03;
+        color: #fff;
+        border: 1px solid #fff;
+        border-radius: 2px;
+        font-size: 26px;
+        height: 50px;
+        margin-bottom: 20px;
+        width: 200px;
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+      }
+      .number-field:focus {
+        border-color: #fff;
+        box-shadow: none;
+      }
+
+      .btn-christmas {
+        border-radius: 2px;
+        background-color: transparent;
+        color: #fff;
+        transition: all 0.3s;
+      }
+      .btn-christmas:hover {
+        border-color: #df1b03;
+        color: #df1b03;
+        border-radius: 6px;
+      }
+
+      .table {
+        width: 200px;
+        max-width: 100%;
+        margin-bottom: 20px;
+        margin-left: auto;
+        font-size: 20px;
+        margin-right: auto;
+        border-width: 2px;
+        border-color: #fff;
+      }
+      .table-bordered > thead > tr > th,
+      .table-bordered > tbody > tr > th {
+        border-color: #fff;
+      }
+
+      tbody tr:nth-child(odd) {
+        background-color: #f81e03;
+      }
+
+    </style>
+  </head>
+  <body>
+    <div class="container text-center">
+      <h1>Gift Exchange 2.0</h1>
+
+      <div class="step-1">
+        <label class="number-label">
+          Enter number of gifters
+        </label>
+        <input type="number" name="gifters" value="" class="form-control number-field">
+        <button type="button" name="button" class="btn btn-default btn-lg btn-christmas">Calculate gift receiver pairs</button>
+      </div>
+
+      <div class="step-2" style="display:none;">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Receiver</th>
+              <th>Giver</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- <tr>
+              <th>1</th>
+              <th>2</th>
+            </tr> -->
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+      function calcGiver(map, receiver) {
+        var gifters = map.length;
+        var giverCandidate = Math.floor(Math.random() * gifters);
+        if (map[giverCandidate] || receiver === giverCandidate) {
+          return calcGiver(map, receiver);
+        } else {
+          map[giverCandidate] = true;
+          return giverCandidate;
+        }
+      }
+
+      $('button').click(function () {
+        $('.step-1').hide();
+        $('.step-2').show();
+
+        var gifters = parseInt($('input[name=gifters]').val());
+        if (!gifters) {
+          gifters = 2;
+        }
+        var giftMap = new Array(gifters);
+        giftMap.fill(false);
+
+        for (var receiver = 0; receiver < gifters; receiver++) {
+          var giver = calcGiver(giftMap, receiver);
+
+          // mapping from 0-starting array to 1-starting view
+          var giverDisplay = giver + 1;
+          var receiverDisplay = receiver + 1;
+
+          var trElemClass = '<tr>';
+          if (receiver % 2 === 1) {
+            trElemClass = '<tr style="background-color: #f81e03;">';
+          }
+
+          var element = trElemClass + '<th>' + receiverDisplay + '</th>' + '<th>' + giverDisplay + '</th></tr>';
+
+          $('table tr:last').after(element);
+        }
+      })
+    </script>
+  </body>
+</html>
