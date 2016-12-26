@@ -2,4 +2,6 @@
 
 A simple gift exchanger for the web.
 
+Idea by [@thanpolas](https://github.com/thanpolas).
+
 Licensed under MIT
