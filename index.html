@@ -20,10 +20,7 @@
         margin-top: 60px;
         font-size: 50px;
         font-family: 'Roboto Slab', sans-serif;
-      }
-
-      .step-1, .step-2 {
-        margin-top: 40px;
+        padding-bottom: 40px;
       }
 
       .number-label {
@@ -94,6 +91,11 @@
       </div>
 
       <div class="step-2" style="display:none;">
+        <h2>Gifts pairs are being calculated...</h2>
+        <img src="santa.gif" alt="Santa loading...">
+      </div>
+
+      <div class="step-3" style="display:none;">
         <table class="table table-bordered">
           <thead>
             <tr>
@@ -127,10 +129,7 @@
         }
       }
 
-      $('button').click(function () {
-        $('.step-1').hide();
-        $('.step-2').show();
-
+      function pairs() {
         var gifters = parseInt($('input[name=gifters]').val());
         if (!gifters || gifters < 2 || gifters > 1000) {
           gifters = 2;
@@ -154,6 +153,17 @@
 
           $('table tr:last').after(element);
         }
+      }
+
+      $('button').click(function () {
+        $('.step-1').hide();
+        $('.step-2').show();
+        pairs();
+        setTimeout(function () {
+          $('.step-2').hide();
+          $('.step-3').show();
+        }, 4000);
+
       })
     </script>
   </body>
