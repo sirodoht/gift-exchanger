@@ -92,7 +92,7 @@
 
       <div class="step-2" style="display:none;">
         <h2>Gifts pairs are being calculated...</h2>
-        <img src="santa.gif" alt="Santa loading...">
+        <img src="santa.gif" alt="Santa loading..." style="max-width: 100%;">
       </div>
 
       <div class="step-3" style="display:none;">
@@ -129,7 +129,7 @@
         }
       }
 
-      function pairs() {
+      function findPairs() {
         var gifters = parseInt($('input[name=gifters]').val());
         if (!gifters || gifters < 2 || gifters > 1000) {
           gifters = 2;
@@ -155,16 +155,26 @@
         }
       }
 
-      $('button').click(function () {
+      function start() {
         $('.step-1').hide();
         $('.step-2').show();
-        pairs();
+        findPairs();
         setTimeout(function () {
           $('.step-2').hide();
           $('.step-3').show();
         }, 4000);
+      }
 
+      $('button').click(function () {
+        start();
       })
+      $('input[name=gifters]').keypress(function(event) {
+        var keycode = event.keyCode || event.which;
+        if(keycode == '13') {
+          start();
+        }
+      });
+
     </script>
   </body>
 </html>
