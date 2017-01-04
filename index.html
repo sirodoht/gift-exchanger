@@ -126,11 +126,12 @@
       function calcGiver(map, receiver) {
         var gifters = map.length;
         var giverCandidate = Math.floor(Math.random() * gifters);
-        if (!map[giverCandidate] && receiver !== giverCandidate) {
+        if (map[giverCandidate] || receiver === giverCandidate) {
+          return calcGiver(map, receiver);
+        } else {
           map[giverCandidate] = true;
           return giverCandidate;
         }
-        return calcGiver(map, receiver);
       }
 
       function findPairs() {
