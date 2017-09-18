@@ -6,9 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Gift Exchanger 2.0</title>
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="normalize.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Open+Sans">
-    <style media="screen">
+    <style>
       html, body {
         height: 100%;
         background: #df1b03;
@@ -17,32 +17,53 @@
       }
 
       h1 {
-        margin-top: 60px;
+        line-height: 1.1;
         font-size: 50px;
+        font-weight: 500;
         font-family: 'Roboto Slab', sans-serif;
+        margin-top: 60px;
+        margin-bottom: 10px;
         padding-bottom: 40px;
       }
 
       .steps-all {
         padding-bottom: 60px;
+        padding-right: 15px;
+        padding-left: 15px;
+        margin-right: auto;
+        margin-left: auto;
+        text-align: center;
+      }
+
+      .loading {
+        font-size: 30px;
+        margin-bottom: 10px;
       }
 
       .number-label {
+        display: inline-block;
         font-size: 22px;
+        font-weight: 700;
+        font-family: inherit;
+        margin-bottom: 5px;
       }
 
       .number-field {
+        display: block;
+        font-family: inherit;
+        width: 200px;
         background: #df1b03;
         color: #fff;
         border: 1px solid #fff;
         border-radius: 2px;
+        outline: 0;
         font-size: 26px;
+        line-height: 1.42857143;
+        text-align: center;
         height: 50px;
-        margin-bottom: 20px;
-        width: 200px;
         margin-left: auto;
         margin-right: auto;
-        text-align: center;
+        margin-bottom: 20px;
       }
       .number-field:focus {
         border-color: #fff;
@@ -50,9 +71,18 @@
       }
 
       .btn-christmas {
+        cursor: pointer;
+        font-size: 18px;
+        font-family: inherit;
+        line-height: 1.33;
         border-radius: 2px;
         background-color: transparent;
         color: #fff;
+        border: 1px solid #ccc;
+        padding: 10px 16px;
+        white-space: nowrap;
+        touch-action: manipulation;
+        user-select: none;
         transition: all 0.3s;
       }
       .btn-christmas:hover {
@@ -69,12 +99,14 @@
         margin-left: auto;
         font-size: 20px;
         margin-right: auto;
-        border-width: 2px;
-        border-color: #fff;
+        border: 2px solid #ddd;
+        border-collapse: collapse;
       }
-      .table-bordered > thead > tr > th,
-      .table-bordered > tbody > tr > th {
-        border-color: #fff;
+      .table > thead > tr > th,
+      .table > tbody > tr > th {
+        border: 2px solid #fff;
+        padding: 8px;
+        line-height: 1.4;
       }
 
       tbody tr:nth-child(odd) {
@@ -84,24 +116,24 @@
     </style>
   </head>
   <body>
-    <div class="container text-center steps-all">
+    <div class="steps-all">
       <h1>Gift Exchanger 2.0</h1>
 
       <div class="step-1">
         <label class="number-label">
           Enter number of gifters
         </label>
-        <input type="number" name="gifters" value="" class="form-control number-field">
-        <button type="button" name="button" class="btn btn-default btn-lg btn-christmas">Calculate gift receiver pairs</button>
+        <input type="number" name="gifters" value="" class="number-field">
+        <button type="button" name="button" class="btn-christmas">Calculate gift receiver pairs</button>
       </div>
 
       <div class="step-2" style="display:none;">
-        <h2>Gifts pairs are being calculated...</h2>
+        <div class="loading">Gifts pairs are being calculated...</div>
         <img src="santa.gif" alt="Santa loading..." style="max-width: 100%;">
       </div>
 
       <div class="step-3" style="display:none;">
-        <table class="table table-bordered">
+        <table class="table">
           <thead>
             <tr>
               <th>Receiver</th>
@@ -120,8 +152,7 @@
 
     </div>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="jquery.min.js"></script>
     <script type="text/javascript">
       function calcGiver(map, receiver) {
         var gifters = map.length;
@@ -173,7 +204,7 @@
       $('button').click(function () {
         start();
       })
-      $('input[name=gifters]').keypress(function(event) {
+      $('input[name=gifters]').keypress(function (event) {
         var keycode = event.keyCode || event.which;
         if(keycode == '13') {
           start();
